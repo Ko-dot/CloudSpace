@@ -99,6 +99,7 @@ function App() {
   const [activePage, setActivePage] = useState("Dashboard");
   const [files, setFiles] = useState([]);
   const [previewFile, setPreviewFile] = useState(null);
+  const [previewText, setPreviewText] = useState("");
   const [folders, setFolders] = useState([]);
   const [selectedFileIds, setSelectedFileIds] = useState([]);
   const [selectionMode, setSelectionMode] = useState(false);
@@ -801,12 +802,43 @@ const restoreFile = async (id) => {
 
   // PREVIEW IMAGE AND PDF
 
+
+// PREVIEW FILES
 const openPreview = async (file) => {
+  const extension = file.name.split(".").pop().toLowerCase();
+  const mime = (file.fileType || "").toLowerCase();
+
+  let previewType = "unsupported";
+
   if (
-    file.fileType !== "application/pdf" &&
-    !file.fileType?.startsWith("image/")
+    mime.startsWith("image/") ||
+    ["jpg", "jpeg", "png", "gif", "webp", "svg", "bmp"].includes(extension)
   ) {
-    alert("Preview is available for images and PDFs only.");
+    previewType = "image";
+  } else if (
+    mime === "application/pdf" ||
+    extension === "pdf"
+  ) {
+    previewType = "pdf";
+  } else if (
+    mime.startsWith("video/") ||
+    ["mp4", "webm", "ogg", "mov"].includes(extension)
+  ) {
+    previewType = "video";
+  } else if (
+    mime.startsWith("audio/") ||
+    ["mp3", "wav", "ogg", "m4a", "aac"].includes(extension)
+  ) {
+    previewType = "audio";
+  } else if (
+    mime.startsWith("text/") ||
+    ["txt", "csv", "json", "xml", "md", "log"].includes(extension)
+  ) {
+    previewType = "text";
+  }
+
+  if (previewType === "unsupported") {
+    alert("Preview is not available for this format. Please download the file.");
     return;
   }
 
@@ -820,18 +852,41 @@ const openPreview = async (file) => {
     }
 
     const blob = await response.blob();
-    const previewUrl = URL.createObjectURL(blob);
 
-    setPreviewFile({
-      ...file,
-      url: previewUrl
-    });
+    if (previewType === "text") {
+      const content = await blob.text();
+      setPreviewText(content);
+      setPreviewFile({
+        ...file,
+        previewType,
+        url: null
+      });
+    } else {
+      const previewUrl = URL.createObjectURL(blob);
+
+      setPreviewText("");
+      setPreviewFile({
+        ...file,
+        previewType,
+        url: previewUrl
+      });
+    }
 
   } catch (error) {
     console.error("Preview error:", error);
     alert(error.message);
   }
 };
+
+const closePreview = () => {
+  if (previewFile?.url) {
+    URL.revokeObjectURL(previewFile.url);
+  }
+
+  setPreviewFile(null);
+  setPreviewText("");
+};
+
 
   
   // DOWNLOAD FILE FROM BACKEND
@@ -1533,6 +1588,260 @@ const openPreview = async (file) => {
                       <span>MODIFIED</span>
                       <span>ACTIONS</span>
                     </div>
+
+                    {/* EMPTY STATE */}
+                    {visibleFiles.length === 0 ? (
+                      <div className="empty-files">
+                        <Folder size={35} />
+
+                        <h3>No files found</h3>
+
+                        <p>
+                          Upload a file or try a different search.
+                        </p>
+                      </div>
+                    ) : (
+                      sortedFiles.map((file) => (
+                        <div
+                          className="file-row"
+                          key={file.id}
+                        >
+
+                          {/* FILE NAME */}
+                          <div className="file-name">
+
+                              {selectionMode && !file.deleted && activePage !== "Trash" && (
+                                <input
+                                  type="checkbox"
+                                  checked={selectedFileIds.includes(file.id)}
+                                  onChange={() => toggleFileSelection(file.id)}
+                                  style={{
+                                    width: "16px",
+                                    height: "16px",
+                                    cursor: "pointer",
+                                    marginRight: "10px"
+                                  }}
+                                />
+                              )}
+
+                              <div
+                                className={`file-type-icon ${file.type}`}
+                              >
+                              {getFileIcon(file.type)}
+                            </div>
+
+                            <span
+                              onClick={() => openPreview(file)}
+                              title="Click to preview"
+                              style={{
+                                cursor: "pointer"
+                              }}
+                            >
+                              {file.name}
+
+                              {file.folderId && (
+                                <small
+                                  style={{
+                                    display: "block",
+                                    fontSize: "11px",
+                                    color: "#9299aa",
+                                    marginTop: "4px",
+                                  }}
+                                >
+                                  {
+                                    folders.find(
+                                      (folder) =>
+                                        folder.id === file.folderId
+                                    )?.name
+                                  }
+                                </small>
+                              )}
+                            </span>
+
+                          </div>
+
+                          <span className="file-meta">
+                            {file.size}
+                          </span>
+
+                          <span className="file-meta">
+                            {file.date}
+                          </span>
+
+                          {/* FILE ACTIONS */}
+                          <div className="file-actions">
+
+                            {file.deleted ? (
+                              <button
+                                title="Restore file"
+                                onClick={() =>
+                                  restoreFile(file.id)
+                                }
+                              >
+                                <Folder size={17} />
+                              </button>
+                            ) : (
+                              <>
+
+                                {/* RENAME */}
+                                <button
+                                  title="Rename file"
+                                  onClick={() =>
+                                    renameFile(file.id)
+                                  }
+                                >
+                                  <Pencil size={17} />
+                                </button>
+
+                                {/* MOVE */}
+                                <button
+                                  title="Move to folder"
+                                  onClick={() =>
+                                    moveFile(file.id)
+                                  }
+                                >
+                                  <FolderPlus size={17} />
+                                </button>
+
+                                {/* PREVIEW */}
+                                <button
+                                  title="Preview file"
+                                  onClick={() =>
+                                    openPreview(file)
+                                  }
+                                >
+                                  <Eye size={17} />
+                                </button>
+
+                                {/* DOWNLOAD */}
+                                <button
+                                  title="Download"
+                                  onClick={() =>
+                                    downloadFile(file)
+                                  }
+                                >
+                                  <Download size={17} />
+                                </button>
+
+                                {/* DELETE */}
+                                <button
+                                  title="Move to trash"
+                                  onClick={() =>
+                                    deleteFile(file.id)
+                                  }
+                                >
+                                  <Trash2 size={17} />
+                                </button>
+
+                              </>
+                            )}
+
+                          </div>
+                        </div>
+                      ))
+                    )}
+
+                  </div>
+                </section>
+              )}
+
+            </>
+          )}
+
+         
+          {/* FILE PREVIEW MODAL */}
+          {previewFile && (
+            <div
+              className="preview-overlay"
+              onClick={closePreview}
+            >
+              <div
+                className="preview-modal"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <div className="preview-header">
+                  <div>
+                    <h3>{previewFile.name}</h3>
+                    <p>File Preview</p>
+                  </div>
+
+                  <button
+                    className="preview-close"
+                    onClick={closePreview}
+                    title="Close preview"
+                  >
+                    <X size={21} />
+                  </button>
+                </div>
+
+                <div className="preview-content">
+
+                  {previewFile.previewType === "image" && (
+                    <img
+                      src={previewFile.url}
+                      alt={previewFile.name}
+                    />
+                  )}
+
+                  {previewFile.previewType === "pdf" && (
+                    <iframe
+                      src={previewFile.url}
+                      title={previewFile.name}
+                    />
+                  )}
+
+                  {previewFile.previewType === "video" && (
+                    <video
+                      src={previewFile.url}
+                      controls
+                      autoPlay
+                      style={{ maxWidth: "100%", maxHeight: "70vh" }}
+                    />
+                  )}
+
+                  {previewFile.previewType === "audio" && (
+                    <audio
+                      src={previewFile.url}
+                      controls
+                      style={{ width: "100%" }}
+                    />
+                  )}
+
+                  {previewFile.previewType === "text" && (
+                    <pre
+                      style={{
+                        whiteSpace: "pre-wrap",
+                        overflow: "auto",
+                        maxHeight: "65vh",
+                        padding: "20px",
+                        textAlign: "left"
+                      }}
+                    >
+                      {previewText}
+                    </pre>
+                  )}
+
+                </div>
+              </div>
+            </div>
+          )}
+
+
+          {/* FOOTER */}
+          <footer className="footer">
+            <span>© 2026 CloudSpace</span>
+            <span>
+              Personal Cloud Workspace · Prototype
+            </span>
+          </footer>
+
+        </div>
+      </main>
+    </div>
+  );
+}
+
+export default App;
 
                     {/* EMPTY STATE */}
                     {visibleFiles.length === 0 ? (
