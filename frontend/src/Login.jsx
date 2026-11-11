@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Cloud } from "lucide-react";
 import "./Login.css";
@@ -14,15 +15,26 @@ export default function Login({ onLogin }) {
 
     if (token) {
       localStorage.setItem("cloudspace_token", token);
+
       window.history.replaceState(
         {},
         document.title,
         window.location.pathname + window.location.search
       );
+
       onLogin(token);
     }
   }, [onLogin]);
 
+  // Demo login without Telegram
+  const handleDemoLogin = () => {
+    const demoToken = "cloudspace-local-demo";
+
+    localStorage.setItem("cloudspace_token", demoToken);
+    onLogin(demoToken);
+  };
+
+  // Telegram login
   const handleTelegramLogin = async () => {
     setLoading(true);
     setError("");
@@ -55,6 +67,7 @@ export default function Login({ onLogin }) {
         </div>
 
         <h1>Welcome to CloudSpace</h1>
+
         <p className="login-subtitle">
           Your personal space. Your files. Your control.
         </p>
@@ -65,6 +78,13 @@ export default function Login({ onLogin }) {
           disabled={loading}
         >
           {loading ? "Connecting..." : "Continue with Telegram"}
+        </button>
+
+        <button
+          className="telegram-login-button"
+          onClick={handleDemoLogin}
+        >
+          Continue without Telegram
         </button>
 
         {error && <p className="login-error">{error}</p>}
