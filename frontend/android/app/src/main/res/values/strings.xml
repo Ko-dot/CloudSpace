@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">CloudSpace</string>
+    <string name="title_activity_main">CloudSpace</string>
+    <string name="package_name">com.cloudspace.app</string>
+    <string name="custom_url_scheme">com.cloudspace.app</string>
+</resources>

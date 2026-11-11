@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+sqlalchemy
+python-multipart
+PyJWT[crypto]
+python-dotenv
+httpx

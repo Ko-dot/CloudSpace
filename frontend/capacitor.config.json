@@ -1,0 +1,5 @@
+{
+  "appId": "com.cloudspace.app",
+  "appName": "CloudSpace",
+  "webDir": "dist"
+}

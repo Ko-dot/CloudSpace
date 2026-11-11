@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZakariaHQ</title>
+<meta name="description" content="Motion that Makes Brands Unforgettable">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#15173B;--paper:#F2F3FB;--violet:#5B3DF5;--coral:#FF5A7A;--mute:#5E6085;--line:#D5D7EC;
+--font:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--violet);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 0}
+nav .logo{font-weight:800;font-size:1.2rem;text-decoration:none}
+nav ul{display:flex;gap:28px;list-style:none;align-items:center}
+nav a{text-decoration:none;font-weight:600;font-size:.95rem}
+.btn{display:inline-block;padding:14px 26px;border-radius:999px;background:var(--ink);color:var(--paper);font-weight:600;text-decoration:none;border:2px solid var(--ink);cursor:pointer;font-family:inherit;font-size:1rem;transition:background .2s,color .2s}
+.btn:hover{background:var(--violet);border-color:var(--violet)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.hero{padding:72px 0 40px}
+h1{font-size:clamp(2.6rem,8vw,6.2rem);line-height:.98;font-weight:800;letter-spacing:-.03em;max-width:13ch}
+.hero p{font-size:1.2rem;color:var(--mute);max-width:46ch;margin:28px 0 34px}
+.actions{display:flex;gap:14px;flex-wrap:wrap}
+.stage{margin-top:64px;border-radius:28px;background:var(--ink);height:230px;position:relative;overflow:hidden}
+.orb{position:absolute;top:50%;left:0;width:84px;height:84px;margin-top:-42px;background:var(--coral);border-radius:50%;animation:roll 4.5s cubic-bezier(.65,0,.35,1) infinite alternate}
+.orb.b{background:var(--violet);width:56px;height:56px;margin-top:-28px;animation-delay:-.6s}
+@keyframes roll{0%{left:4%;border-radius:50%;transform:rotate(0) scale(1)}50%{border-radius:18%;transform:rotate(180deg) scale(1.35)}100%{left:calc(96% - 84px);border-radius:50%;transform:rotate(360deg) scale(1)}}
+.ticks{position:absolute;bottom:0;left:0;right:0;height:26px;background:repeating-linear-gradient(90deg,#ffffff33 0 2px,transparent 2px 24px)}
+.playhead{position:absolute;top:0;bottom:0;width:2px;background:#fff;animation:scrub 6s linear infinite}
+@keyframes scrub{from{left:0}to{left:100%}}
+/* logos */
+.logos{overflow:hidden;padding:36px 0;mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.track{display:flex;gap:56px;width:max-content;animation:marquee 28s linear infinite}
+.track img{height:38px;width:auto;opacity:.75}
+@keyframes marquee{to{transform:translateX(-50%)}}
+section{padding:84px 0}
+h2{font-size:clamp(1.9rem,4vw,3rem);letter-spacing:-.02em;line-height:1.1;margin-bottom:36px}
+/* projects + video slots */
+.cat{margin-bottom:72px}
+.cat-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;border-top:2px solid var(--line);padding-top:24px;margin-bottom:24px}
+.cat-head h3{font-size:clamp(1.4rem,3.4vw,2.2rem);letter-spacing:-.02em}
+.cat-head a{font-weight:600;color:var(--violet)}
+.grid{display:grid;gap:20px;grid-template-columns:repeat(3,1fr)}
+.grid.short{grid-template-columns:repeat(4,1fr)}
+.slot{position:relative;border-radius:20px;overflow:hidden;background:#E4E6F7;border:2px dashed var(--line);aspect-ratio:16/9;display:grid;place-items:center;color:var(--mute);font-weight:600;text-align:center;padding:12px}
+.short .slot{aspect-ratio:9/16}
+.slot.filled{border:0;background:#000}
+.slot iframe,.slot video{position:absolute;inset:0;width:100%;height:100%;border:0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;background:var(--violet);color:#fff;border-radius:28px;padding:48px}
+.stats b{display:block;font-size:clamp(2.2rem,5vw,3.8rem);letter-spacing:-.03em;line-height:1}
+.stats span{opacity:.85}
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+blockquote{border-left:4px solid var(--coral);padding-left:20px}
+blockquote p{font-size:1.1rem;margin-bottom:18px}
+blockquote footer{display:flex;gap:12px;align-items:center;color:var(--mute);font-size:.95rem}
+blockquote img{width:48px;height:48px;border-radius:50%;object-fit:cover}
+blockquote footer b{color:var(--ink);display:block}
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.contact p{color:var(--mute);margin-bottom:20px}
+.links{list-style:none;display:grid;gap:8px;margin-top:18px}
+.links a{font-weight:600}
+form{display:grid;gap:16px}
+label{font-weight:600;font-size:.95rem;display:grid;gap:6px}
+input,textarea{font:inherit;padding:14px 16px;border-radius:14px;border:2px solid var(--line);background:#fff;color:var(--ink)}
+textarea{min-height:130px;resize:vertical}
+.status{min-height:1.5em;font-weight:600;color:var(--violet)}
+footer.site{padding:36px 0;color:var(--mute);border-top:2px solid var(--line);font-size:.95rem}
+@media(max-width:820px){
+nav ul li:not(:last-child){display:none}
+.stats,.quotes,.contact,.grid,.grid.short{grid-template-columns:1fr}
+.grid.short{grid-template-columns:repeat(2,1fr)}
+}
+@media(prefers-reduced-motion:reduce){.orb,.playhead,.track{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav aria-label="Main">
+  <a class="logo" href="#top">ZakariaHQ</a>
+  <ul>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#test">Testimonials</a></li>
+    <li><a href="#call" class="btn">Book a Call</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+  <h1>Motion that Makes Brands Unforgettable</h1>
+  <p>We don't just animate your product — we make people want it</p>
+  <div class="actions">
+    <a class="btn" href="#call">Book a call</a>
+    <a class="btn ghost" href="https://x.com/1zakariahq/">Let's chat</a>
+  </div>
+  <div class="stage" aria-hidden="true"><div class="orb"></div><div class="orb b"></div><div class="ticks"></div><div class="playhead"></div></div>
+</header>
+
+<div class="logos" aria-label="Clients">
+  <div class="track" id="track"></div>
+</div>
+
+<section id="projects">
+  <h2>Projects</h2>
+
+  <div class="cat">
+    <div class="cat-head"><h3>Product Launch &amp; Demo's</h3></div>
+    <div class="grid" data-cat="demos"></div>
+  </div>
+  <div class="cat">
+    <div class="cat-head"><h3>Youtube &amp; VSL's</h3></div>
+    <div class="grid" data-cat="yt"></div>
+  </div>
+  <div class="cat">
+    <div class="cat-head"><h3>Shorts / Reels</h3></div>
+    <div class="grid short" data-cat="shorts"></div>
+  </div>
+</section>
+
+<section>
+  <div class="stats">
+    <div><b>80+</b><span>Happy customers</span></div>
+    <div><b>20M+</b><span>Views generated</span></div>
+    <div><b>300+</b><span>Projects</span></div>
+  </div>
+</section>
+
+<section id="test">
+  <h2>Testimonials</h2>
+  <div class="quotes">
+    <blockquote><p>“Its the best motions you ever made for us Really its so impressive... I can’t wait to release app”</p>
+      <footer><img src="https://framerusercontent.com/images/1CT8OElGI446jia3ToLWhxaTa0.png?width=680&height=680" alt="Maloc"><span><b>Maloc</b>Cars marketplace</span></footer></blockquote>
+    <blockquote><p>“BROTHER I think this is the best edit of my videos I have seen in my entire life bro this is perfect no revisions are needed nothing it's all perfect”</p>
+      <footer><img src="https://framerusercontent.com/images/04HQrYBnxisyNool48jtnDpfw.png?width=1024&height=1024" alt="David Smith"><span><b>David Smith</b>UX Researcher at Theta</span></footer></blockquote>
+    <blockquote><p>“Thank you so much, bro. This is amazing, thanks for your work and the corrections. We're going to launch LuviTravel with your video on Tuesday!”</p>
+      <footer><img src="https://framerusercontent.com/images/2XcFKHX9fM5KzXFZEk0ozsTZFA.png?width=1024&height=1024" alt="Samuel Jackson"><span><b>Samuel Jackson</b>Product Designer at Omega</span></footer></blockquote>
+  </div>
+</section>
+
+<section id="call">
+  <div class="contact">
+    <div>
+      <h2>Book a Call</h2>
+      <p>Let's talk scope, timeline, and budget — no fluff, just clarity</p>
+      <a class="btn ghost" href="https://x.com/1zakariahq/">or DM me here</a>
+      <ul class="links">
+        <li><a href="https://x.com/1zakariahq">X.com @1zakariahq</a></li>
+        <li><a href="https://instagram.com/1zakariahq">Instagram @1zakariahq</a></li>
+        <li><a href="https://www.linkedin.com/in/zakaria-nourine-396b3533b/">Linkedin zakarianourine</a></li>
+      </ul>
+    </div>
+    <form id="f" novalidate>
+      <label>Name<input name="name" required autocomplete="name"></label>
+      <label>Email<input name="email" type="email" required autocomplete="email"></label>
+      <label>Message<textarea name="msg" required></textarea></label>
+      <button class="btn" type="submit">Send message</button>
+      <div class="status" role="status" id="s"></div>
+    </form>
+  </div>
+</section>
+
+<footer class="site">Built by Zakaria HQ &nbsp;·&nbsp; © 2026 All rights reserved</footer>
+</div>
+
+<script>
+/* ============ YAHAN APNE VIDEOS ADD KARO ============
+   Har category ki list mein YouTube link / video ID ya .mp4 link daalo.
+   Example:  demos: ["https://youtu.be/XXXXXXXXXXX", "https://yoursite.com/clip.mp4"]
+   Jitne videos daaloge utne dikhenge; khali rahe to 3 (shorts mein 4) placeholder boxes dikhenge. */
+var VIDEOS = {
+  demos:  [],
+  yt:     [],
+  shorts: ["https://youtu.be/XpnzTHa52TU"]
+};
+
+/* Client logos (Framer pe jo the) */
+var LOGOS = ["NLxizrcBv2NPGAvRI1SVc059M","tZgWN8SMpxrogXPXy0M7guBX0","JPw8yUvUmDjBJp701AfmEwBuFA","hzIupBSa3J4G3oisQqeP1DXLrE","KmqqfQpLKyqsz8YZh0TZkodnStE","6RMWx2Q2UyWu7tTBvxeveLogLg"];
+var lt = document.getElementById('track');
+LOGOS.concat(LOGOS).forEach(function(id){
+  var i=document.createElement('img');
+  i.src='https://framerusercontent.com/images/'+id+'.png?width=512&height=146';
+  i.alt='';i.loading='lazy';lt.appendChild(i);
+});
+
+function ytId(u){var m=u.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/);return m?m[1]:(/^[\w-]{11}$/.test(u)?u:null)}
+document.querySelectorAll('.grid[data-cat]').forEach(function(g){
+  var list=VIDEOS[g.dataset.cat]||[], min=g.classList.contains('short')?4:3;
+  var n=Math.max(list.length,min);
+  for(var k=0;k<n;k++){
+    var d=document.createElement('div');d.className='slot';
+    var u=list[k];
+    if(u){
+      d.classList.add('filled');
+      if(/\.(mp4|webm)(\?|$)/i.test(u)){d.innerHTML='<video controls playsinline preload="metadata" src="'+u+'"></video>'}
+      else{var id=ytId(u);d.innerHTML=id?'<iframe src="https://www.youtube-nocookie.com/embed/'+id+'" title="Video" loading="lazy" allowfullscreen></iframe>':'Invalid link'}
+    }else{d.textContent='Video yahan aayega'}
+    g.appendChild(d);
+  }
+});
+
+/* Contact form: abhi sirf front-end. Messages paane ke liye Formspree/Web3Forms jodo. */
+document.getElementById('f').addEventListener('submit',function(e){
+  e.preventDefault();
+  var f=e.target,s=document.getElementById('s');
+  if(!f.name.value.trim()||!f.email.validity.valid||!f.msg.value.trim()){s.textContent='Please fill in your name, a valid email and a message.';return}
+  s.textContent='Message ready. Connect a form service to start receiving it.';
+  f.reset();
+});
+</script>
+</body>
+</html>

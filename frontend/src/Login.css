@@ -1,0 +1,72 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f7fb;
+  padding: 24px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 42px 34px;
+  background: white;
+  border: 1px solid #e8ebf1;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(20, 35, 60, 0.07);
+}
+
+.login-logo {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 22px;
+  display: grid;
+  place-items: center;
+  color: white;
+  background: #2563eb;
+  border-radius: 18px;
+}
+
+.login-card h1 {
+  margin: 0;
+  color: #172033;
+  font-size: 27px;
+}
+
+.login-subtitle {
+  margin: 12px 0 30px;
+  color: #687386;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.telegram-login-button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 11px;
+  background: #229ed9;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.telegram-login-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.login-error {
+  margin-top: 16px;
+  color: #dc2626;
+  font-size: 13px;
+}
+
+.login-footer {
+  margin: 26px 0 0;
+  color: #929bad;
+  font-size: 12px;
+}
