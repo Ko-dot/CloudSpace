@@ -327,10 +327,15 @@ const handleUpload = async (event) => {
       });
 
       if (!response.ok) {
-        throw new Error(`Upload failed for ${file.name}`);
-      }
-    }
+      const errorText = await response.text();
 
+      console.error("Backend upload error:", errorText);
+
+      throw new Error(
+        `Upload failed for ${file.name}: ${errorText}`
+      );
+    }
+  } 
     // Fetch updated files from the backend
     const filesResponse = await fetch(`${API_URL}/files/`);
 
@@ -1753,3 +1758,4 @@ const openPreview = async (file) => {
 }
 
 export default App;
+
